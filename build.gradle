@@ -12,11 +12,13 @@ buildscript {
         compile.exclude module: "spring-boot-starter-tomcat"
     }
 }
-apply plugin: 'java'
+
+apply plugin: 'groovy'
 apply plugin: 'spring-boot'
+apply plugin: 'eclipse'
 
 jar {
-    baseName = 'demo'
+    baseName = 'mtp'
     version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
@@ -26,12 +28,18 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-undertow")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    
+    compile 'net.openhft:chronicle-map:2.1.1'
+    
+    
+    testCompile "org.codehaus.groovy:groovy-all:2.4.1"
+    testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+	testRuntime "cglib:cglib-nodep:3.1" 
+	testRuntime "org.objenesis:objenesis:2.1"
 }
 
 task wrapper(type: Wrapper) {
