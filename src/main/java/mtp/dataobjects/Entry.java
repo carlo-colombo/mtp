@@ -13,6 +13,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  *
  */
 public class Entry implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1909706282772873931L;
+
 	private Long userId;
 
 	private String currencyFrom;

@@ -34,7 +34,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     
     compile 'net.openhft:chronicle-map:2.1.1'
-    
+
+	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0'    
     
     testCompile "org.codehaus.groovy:groovy-all:2.4.1"
     testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
