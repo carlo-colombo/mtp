@@ -1,31 +1,17 @@
 package mtp.services;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 
 import mtp.dataobjects.Entry;
-import net.openhft.chronicle.map.ChronicleMapBuilder;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-@Service
 public class DatastoreServiceImpl implements DatastoreService {
 
-	Map<String, Entry> datastore;
+	ConcurrentMap<String, Entry> datastore;
 
-	public DatastoreServiceImpl() {
-		try {
-			datastore = ChronicleMapBuilder.of(String.class, Entry.class)
-					.createPersistedTo(new File("/tmp/mtp"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public DatastoreServiceImpl(ConcurrentMap<String, Entry> concurrentMap) {
+		datastore = concurrentMap;
 	}
 
 	/*
