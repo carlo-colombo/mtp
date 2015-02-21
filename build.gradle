@@ -35,7 +35,9 @@ dependencies {
     
     compile 'net.openhft:chronicle-map:2.1.1'
 
-	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0'    
+	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0'
+	compile 'org.apache.commons:commons-lang3:3.3.2'
+	
     
     testCompile "org.codehaus.groovy:groovy-all:2.4.1"
     testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
