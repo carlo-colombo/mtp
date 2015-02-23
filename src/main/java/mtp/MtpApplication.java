@@ -20,11 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Import(MtpConfiguration.class)
 public class MtpApplication {
 
-	@RequestMapping(value = { "", "/" })
-	public String index() {
-		return "Running ...";
-	}
-
 	@Autowired
 	DatastoreService datastoreService;
 
@@ -34,13 +29,12 @@ public class MtpApplication {
 
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
 	public @ResponseBody String post(@RequestBody Entry entry) {
-		datastoreService.put(entry);
-		return null;
+		return datastoreService.put(entry);
 	}
 
 	@RequestMapping(value = "/list")
 	public @ResponseBody Collection<Entry> list() {
-		return datastoreService.values();
+		return datastoreService.list();
 	}
 
 	public static void main(String[] args) {

@@ -18,6 +18,8 @@ public class Entry implements Serializable {
 	 */
 	private static final long serialVersionUID = -1909706282772873931L;
 
+	private String id;
+	
 	private Long userId;
 
 	private String currencyFrom;
@@ -97,5 +99,13 @@ public class Entry implements Serializable {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	public void setTimePlaced(LocalDateTime timePlaced) {
 		this.timePlaced = timePlaced;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

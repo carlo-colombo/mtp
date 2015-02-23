@@ -1,16 +1,16 @@
 package mtp.services;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentMap;
 
 import mtp.dataobjects.Entry;
 
 public class DatastoreServiceImpl implements DatastoreService {
 
-	ConcurrentMap<String, Entry> datastore;
+	Map<String, Entry> datastore;
 
-	public DatastoreServiceImpl(ConcurrentMap<String, Entry> concurrentMap) {
+	public DatastoreServiceImpl(Map<String, Entry> concurrentMap) {
 		datastore = concurrentMap;
 	}
 
@@ -20,10 +20,12 @@ public class DatastoreServiceImpl implements DatastoreService {
 	 * @see mtp.services.DatastoreService#put(mtp.dataobjects.Entry)
 	 */
 	@Override
-	public void put(Entry entry) {
-		datastore.put(
-				String.format("%s-%s-%s", entry.getUserId(),
-						entry.getTimePlaced(), UUID.randomUUID()), entry);
+	public String put(Entry entry) {
+		String id = String.format("%s-%s-%s", entry.getUserId(),
+				entry.getTimePlaced(), UUID.randomUUID());
+		entry.setId(id);
+		datastore.put(id, entry);
+		return id;
 	}
 
 	/*
@@ -32,7 +34,12 @@ public class DatastoreServiceImpl implements DatastoreService {
 	 * @see mtp.services.DatastoreService#values()
 	 */
 	@Override
-	public Collection<Entry> values() {
+	public Collection<Entry> list() {
 		return datastore.values();
+	}
+
+	@Override
+	public void addView(View view) {
+
 	}
 }

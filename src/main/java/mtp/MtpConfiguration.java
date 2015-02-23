@@ -7,18 +7,21 @@ import java.util.concurrent.ConcurrentMap;
 import mtp.dataobjects.Entry;
 import mtp.services.DatastoreService;
 import mtp.services.DatastoreServiceImpl;
+import mtp.services.Result;
+import mtp.services.View;
 import net.openhft.chronicle.map.ChronicleMapBuilder;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@org.springframework.context.annotation.Configuration
+@Configuration
 public class MtpConfiguration {
 
 	private static final String DATA_DIR = StringUtils.defaultIfBlank(
 			System.getenv("OPENSHIFT_DATA_DIR"), "/tmp");
 
-	public ConcurrentMap<String, Entry> datastore() {
+	private ConcurrentMap<String, Entry> datastore() {
 		try {
 			return ChronicleMapBuilder.of(String.class, Entry.class)
 					.createPersistedTo(new File(DATA_DIR + "/datastore"));
@@ -31,6 +34,10 @@ public class MtpConfiguration {
 
 	@Bean
 	public DatastoreService datastoreService() {
-		return new DatastoreServiceImpl(datastore());
+		DatastoreServiceImpl datastoreServiceImpl = new DatastoreServiceImpl(
+				datastore());
+		datastoreServiceImpl.addView(new View("asd",
+				(Entry entry) -> new Result()));
+		return datastoreServiceImpl;
 	}
 }

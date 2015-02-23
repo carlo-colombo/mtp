@@ -1,16 +1,8 @@
 buildscript {
-    ext {
-        springBootVersion = '1.2.1.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-    configurations {
-        compile.exclude module: "spring-boot-starter-tomcat"
-    }
+	ext { springBootVersion = '1.2.1.RELEASE' }
+	repositories { mavenCentral() }
+	dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") }
+	configurations { compile.exclude module: "spring-boot-starter-tomcat" }
 }
 
 apply plugin: 'groovy'
@@ -18,33 +10,29 @@ apply plugin: 'spring-boot'
 apply plugin: 'eclipse'
 
 jar {
-    baseName = 'mtp'
-    version = '0.0.1-SNAPSHOT'
+	baseName = 'mtp'
+	version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-undertow")
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    
-    compile 'net.openhft:chronicle-map:2.1.1'
+	compile("org.springframework.boot:spring-boot-starter-undertow")
+	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+
+	compile 'net.openhft:chronicle-map:2.1.1'
 
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0'
 	compile 'org.apache.commons:commons-lang3:3.3.2'
-	
-    
-    testCompile "org.codehaus.groovy:groovy-all:2.4.1"
-    testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
-	testRuntime "cglib:cglib-nodep:3.1" 
+
+
+	testCompile "org.codehaus.groovy:groovy-all:2.4.1"
+	testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+	testRuntime "cglib:cglib-nodep:3.1"
 	testRuntime "org.objenesis:objenesis:2.1"
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.1'
-}
+task wrapper(type: Wrapper) { gradleVersion = '2.2.1' }
