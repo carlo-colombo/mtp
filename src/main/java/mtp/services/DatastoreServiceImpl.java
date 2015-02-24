@@ -3,7 +3,6 @@ package mtp.services;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
@@ -11,15 +10,18 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.springframework.util.StringUtils;
-
-import javafx.scene.GroupBuilder;
 import mtp.dataobjects.Entry;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 public class DatastoreServiceImpl implements DatastoreService {
 
 	Map<String, Entry> datastore;
 	Map<String, View> views = new HashMap<>();
+
+	@Autowired
+	private ApplicationContext appContext;
 
 	public DatastoreServiceImpl(Map<String, Entry> concurrentMap) {
 		datastore = concurrentMap;
@@ -50,14 +52,9 @@ public class DatastoreServiceImpl implements DatastoreService {
 	}
 
 	@Override
-	public void addView(View view) {
-		views.put(view.getName(), view);
-	}
-
-	@Override
 	public Object getView(String viewName, Boolean group, Integer groupLevel) {
 
-		View view = views.get(viewName);
+		View view = appContext.getBean(viewName, View.class);
 		Stream<Result> map = datastore.values().parallelStream()
 				.map(view.getMap());
 

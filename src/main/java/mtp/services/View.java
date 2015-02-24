@@ -1,5 +1,6 @@
 package mtp.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collector;
@@ -10,6 +11,10 @@ import mtp.dataobjects.Entry;
 public class View {
 	public static final Collector<Result, ?, Integer> COUNT = Collectors
 			.summingInt((Result res) -> 1);
+
+	public static final Collector<Result, ?, Double> SUM = Collectors
+			.summingDouble((Result res) -> ((BigDecimal) res.getValue())
+					.doubleValue());
 
 	private String name;
 

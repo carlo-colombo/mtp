@@ -19,14 +19,14 @@ public class Entry implements Serializable {
 	private static final long serialVersionUID = -1909706282772873931L;
 
 	private String id;
-	
+
 	private Long userId;
 
 	private String currencyFrom;
 
 	private String currencyTo;
 
-	private Long amountSell;
+	private BigDecimal amountSell;
 
 	private BigDecimal amountBuy;
 
@@ -38,10 +38,6 @@ public class Entry implements Serializable {
 
 	public BigDecimal getAmountBuy() {
 		return amountBuy;
-	}
-
-	public Long getAmountSell() {
-		return amountSell;
 	}
 
 	public String getCurrencyFrom() {
@@ -66,10 +62,6 @@ public class Entry implements Serializable {
 
 	public void setAmountBuy(BigDecimal amountBuy) {
 		this.amountBuy = amountBuy;
-	}
-
-	public void setAmountSell(Long amountSell) {
-		this.amountSell = amountSell;
 	}
 
 	public void setCurrencyFrom(String currencyFrom) {
@@ -107,5 +99,13 @@ public class Entry implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public BigDecimal getAmountSell() {
+		return amountSell;
+	}
+
+	public void setAmountSell(BigDecimal amountSell) {
+		this.amountSell = amountSell;
 	}
 }
