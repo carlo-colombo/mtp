@@ -19,6 +19,11 @@
 </head>
 <body>
 	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<h4>Originating Country</h4>
+			</div>
+		</div>
 		<div class="row" ng-controller="CountryController as country">
 			<div class="col-xs-6">
 				<canvas class="chart chart-doughnut" data="country.values"
@@ -28,7 +33,7 @@
 				<table class="table table-striped table-condensed">
 					<tr>
 						<th>Country</th>
-						<th>#transactions</th>
+						<th># Transactions</th>
 					</tr>
 					<tr ng-repeat="entry in country.data | orderBy:0:true">
 						<td>{{entry[0]}}</td>
@@ -37,11 +42,13 @@
 				</table>
 			</div>
 		</div>
-		<div class="row" ng-controller="SoldBoughtController as soldBought">
-			<div class="col-xs-6">
-				<canvas class="chart chart-radar" labels="soldBought.labels"
-					data="soldBought.data" legend="true" series="soldBought.series"></canvas>
+		<hr />
+		<div class="row">
+			<div class="col-xs-12">
+				<h4>Currency sold/bought</h4>
 			</div>
+		</div>
+		<div class="row" ng-controller="SoldBoughtController as soldBought">
 			<div class="col-xs-6">
 				<table class="table table-striped table-condensed">
 					<tr>
@@ -53,6 +60,36 @@
 						<td>{{row[0]}}</td>
 						<td>{{row[1]}}</td>
 						<td>{{row[2]}}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-6">
+				<canvas class="chart chart-radar" labels="soldBought.labels"
+					data="soldBought.data" legend="true" series="soldBought.series"></canvas>
+			</div>
+		</div>
+		<hr />
+		<div class="row">
+			<div class="col-xs-12">
+				<h4>Conversion rates</h4>
+			</div>
+		</div>
+		<div class="row" ng-controller="RateController as rate">
+			<div class="col-xs-12">
+				<table class="table table-condensed">
+					<tr>
+						<th>Conversion</th>
+						<th>Min</th>
+						<th>Max</th>
+						<th>Average</th>
+						<th># Transactions</th>
+					</tr>
+					<tr ng-repeat="(conversion, stats) in rate.data">
+						<td>{{conversion}}</td>
+						<td>{{stats.min}}</td>
+						<td>{{stats.max}}</td>
+						<td>{{stats.average}}</td>
+						<td>{{stats.count}}</td>
 					</tr>
 				</table>
 			</div>

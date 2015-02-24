@@ -27,11 +27,18 @@ angular.module('MTP', ['chart.js'])
       self.table = _.zip(self.labels,sold,bought)
     })
   })
+  .controller('RateController', function($http,rate){
+	  var self = this
+	  rate().then(function(res){
+		  self.data = res.data
+	  })
+  })
   .factory('countries', makeView('countries'))
   .factory('amountSold', makeView('amountSold'))
   .factory('amountBought', makeView('amountBought'))
+  .factory('rate', makeView('rate'))
 
-function makeView(view) {
+function makeView(view, level) {
   return function($http) {
     return function() {
       return $http.get('/api/view/' + view, {
