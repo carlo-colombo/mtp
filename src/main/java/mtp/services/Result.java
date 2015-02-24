@@ -1,12 +1,20 @@
 package mtp.services;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Result {
-	private String[] key;
+	private List<String> key;
 	private Object value;
 
 	public Result(Object value, String... key) {
-		this.setKey(key);
 		this.value = value;
+		this.setKey(Arrays.asList(key));
+	}
+
+	public Result(Object value, List<String> key) {
+		this.value = value;
+		this.setKey(key);
 	}
 
 	public Object getValue() {
@@ -17,11 +25,12 @@ public class Result {
 		this.value = value;
 	}
 
-	public String[] getKey() {
+	public List<String> getKey() {
 		return key;
 	}
 
-	public void setKey(String[] key) {
+	public void setKey(List<String> key) {
 		this.key = key;
 	}
+
 }

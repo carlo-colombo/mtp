@@ -1,6 +1,7 @@
 package mtp.services;
 
 import java.math.BigDecimal;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collector;
@@ -9,12 +10,21 @@ import java.util.stream.Collectors;
 import mtp.dataobjects.Entry;
 
 public class View {
+	private static Double getDouble(Result res) {
+		if (res.getValue() instanceof BigDecimal) {
+			return ((BigDecimal) res.getValue()).doubleValue();
+		}
+		return 0d;
+	}
+
 	public static final Collector<Result, ?, Integer> COUNT = Collectors
 			.summingInt((Result res) -> 1);
 
 	public static final Collector<Result, ?, Double> SUM = Collectors
-			.summingDouble((Result res) -> ((BigDecimal) res.getValue())
-					.doubleValue());
+			.summingDouble(View::getDouble);
+
+	public static final Collector<Result, ?, DoubleSummaryStatistics> STATS = Collectors
+			.summarizingDouble(View::getDouble);
 
 	private String name;
 

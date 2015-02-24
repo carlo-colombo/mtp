@@ -1,6 +1,5 @@
 package mtp.services;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +11,7 @@ import java.util.stream.Stream;
 
 import mtp.dataobjects.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
@@ -67,7 +67,10 @@ public class DatastoreServiceImpl implements DatastoreService {
 	}
 
 	private Function<Result, ? extends String> getKey(Integer groupLevel) {
-		return (Result res) -> org.apache.commons.lang3.StringUtils.join(Arrays
-				.asList(res.getKey()).subList(0, groupLevel), "/");
+		return (Result res) -> StringUtils.join(
+				res.getKey().subList(
+						0,
+						groupLevel != null ? groupLevel
+								: res.getKey().size() - 2), "/");
 	}
 }
