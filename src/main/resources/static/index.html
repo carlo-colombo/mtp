@@ -7,13 +7,35 @@
 <link
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
+
+<link rel="stylesheet"
+	href="bower_components/angular-chart.js/dist/angular-chart.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
+<script src="bower_components/Chart.js/Chart.js"></script>
+<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
 <script src="src/main.js"></script>
 </head>
-<body ng-controller="MainController as main">
+<body>
 	<div class="container">
-		<div class="col-xs-12"></div>
+		<div class="row" ng-controller="CountryController as country">
+			<div class="col-xs-6">
+				<canvas class="chart chart-doughnut" data="country.values"
+					labels="country.countries" legend="true"></canvas>
+			</div>
+			<div class="col-xs-6">
+				<table class="table table-striped table-condensed">
+					<tr>
+						<th>Country</th>
+						<th>#transactions</th>
+					</tr>
+					<tr ng-repeat="entry in country.data | orderBy:'value':true">
+						<td>{{entry.key}}</td>
+						<td>{{entry.value}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

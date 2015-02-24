@@ -1,17 +1,12 @@
 package mtp.services;
 
-import java.util.List;
-
 public class Result {
-	private List<String> key;
+	private String[] key;
 	private Object value;
 
-	public List<String> getKey() {
-		return key;
-	}
-
-	public void setKey(List<String> key) {
-		this.key = key;
+	public Result(Object value, String... key) {
+		this.setKey(key);
+		this.value = value;
 	}
 
 	public Object getValue() {
@@ -20,5 +15,13 @@ public class Result {
 
 	public void setValue(Object value) {
 		this.value = value;
+	}
+
+	public String[] getKey() {
+		return key;
+	}
+
+	public void setKey(String[] key) {
+		this.key = key;
 	}
 }

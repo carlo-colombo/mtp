@@ -3,6 +3,8 @@ package mtp;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import mtp.dataobjects.Entry;
 import mtp.services.DatastoreService;
@@ -36,8 +38,11 @@ public class MtpConfiguration {
 	public DatastoreService datastoreService() {
 		DatastoreServiceImpl datastoreServiceImpl = new DatastoreServiceImpl(
 				datastore());
-		datastoreServiceImpl.addView(new View("asd",
-				(Entry entry) -> new Result()));
+		View countries = new View("countries", (Entry entry) -> new Result(
+				null, entry.getOriginatingCountry()), View.COUNT);
+
+		datastoreServiceImpl.addView(countries);
+
 		return datastoreServiceImpl;
 	}
 }

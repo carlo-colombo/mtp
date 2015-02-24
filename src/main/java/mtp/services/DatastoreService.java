@@ -9,7 +9,10 @@ public interface DatastoreService {
 	public abstract String put(Entry entry);
 
 	public abstract Collection<Entry> list();
-	
+
 	public abstract void addView(View view);
+
+	public abstract Object getView(String viewName, Boolean group,
+			Integer groupLevel);
 
 }

@@ -1,14 +1,25 @@
 package mtp.services;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.springframework.util.StringUtils;
+
+import javafx.scene.GroupBuilder;
 import mtp.dataobjects.Entry;
 
 public class DatastoreServiceImpl implements DatastoreService {
 
 	Map<String, Entry> datastore;
+	Map<String, View> views = new HashMap<>();
 
 	public DatastoreServiceImpl(Map<String, Entry> concurrentMap) {
 		datastore = concurrentMap;
@@ -40,6 +51,26 @@ public class DatastoreServiceImpl implements DatastoreService {
 
 	@Override
 	public void addView(View view) {
+		views.put(view.getName(), view);
+	}
 
+	@Override
+	public Object getView(String viewName, Boolean group, Integer groupLevel) {
+
+		View view = views.get(viewName);
+		Stream<Result> map = datastore.values().parallelStream()
+				.map(view.getMap());
+
+		Collector<Result, ?, ?> collectFunction = group ? Collectors
+				.groupingBy(getKey(groupLevel), view.getReduce()) : Collectors
+				.toList();
+
+		return map.collect(collectFunction);
+
+	}
+
+	private Function<Result, ? extends String> getKey(Integer groupLevel) {
+		return (Result res) -> org.apache.commons.lang3.StringUtils.join(Arrays
+				.asList(res.getKey()).subList(0, groupLevel), "/");
 	}
 }
