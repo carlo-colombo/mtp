@@ -13,6 +13,11 @@ import mtp.services.View;
 
 import org.springframework.context.annotation.Bean;
 
+/**
+ * Views bean used from DatastoreServiceImpl
+ * @author carlo
+ *
+ */
 public class MtpViews {
 
 	@Bean
@@ -33,6 +38,12 @@ public class MtpViews {
 				entry.getAmountSell(), entry.getCurrencyTo()), View.SUM);
 	}
 
+	@Bean
+	public View rate() {
+		return new View("rate", (Entry entry) -> new Result(entry.getRate(),
+				rateKeys(entry)), View.STATS);
+	}
+
 	private List<String> rateKeys(Entry entry) {
 
 		LocalDateTime localDateTime = entry.getTimePlaced();
@@ -51,9 +62,4 @@ public class MtpViews {
 		return keys;
 	}
 
-	@Bean
-	public View rate() {
-		return new View("rate", (Entry entry) -> new Result(entry.getRate(),
-				rateKeys(entry)), View.STATS);
-	}
 }

@@ -1,15 +1,23 @@
 package mtp.services
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime
+import java.util.concurrent.ConcurrentHashMap
 
 import mtp.dataobjects.Entry
 import spock.lang.Specification
 
 
 class DatastoreServiceImplSpec extends Specification{
+	
+	DatastoreServiceImpl service
+	
+	def setup(){
+		def builder = {String string -> new ConcurrentHashMap<String, Result>()}
+		service = new DatastoreServiceImpl(new HashMap<String, Entry>(), builder );
+	}
+	
 	def '#put should return the entry id'(){
-		setup:
-			def service = new DatastoreServiceImpl(new HashMap<String, Entry>());
+		setup:		
 			def date = LocalDateTime.now()
 			def userId = 1212
 			def entryId = service.put(new Entry(userId:userId,timePlaced:date))
@@ -23,7 +31,6 @@ class DatastoreServiceImplSpec extends Specification{
 			def date = LocalDateTime.now()
 			def userId = 1212
 		expect:
-			def service = new DatastoreServiceImpl(new HashMap<String, Entry>());
 			def entryId = service.put(new Entry(userId:userId,timePlaced:date))
 			service.list().find({
 				it.id == entryId
@@ -32,7 +39,6 @@ class DatastoreServiceImplSpec extends Specification{
 	
 	def '#list should return a list of all entries added'(){
 		setup:
-			def service = new DatastoreServiceImpl(new HashMap<String, Entry>());
 			service.put(new Entry(userId:10, timePlaced:LocalDateTime.now()))
 			service.put(new Entry(userId:12, timePlaced:LocalDateTime.now()))
 			def list = service.list();
