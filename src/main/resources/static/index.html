@@ -105,11 +105,13 @@
 		</div>
 		<div ng-controller="RateGraphController as rate">
 			<div class="row">
-				<div class="col-xs-12"></div>
+				<div class="col-xs-12">
+					<select class="form-control" ng-model="rate.groupLevel" ng-options="item.value as item.label for item in rate.groupOptions"></select>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					<canvas class="chart chart-line" data="rate.data" labels="rate.labels" legend="true" ></canvas>
+					<canvas class="chart chart-line" data="rate.data" labels="rate.labels" legend="true" series="rate.series" ></canvas>
 				</div>
 			</div>
 		</div>

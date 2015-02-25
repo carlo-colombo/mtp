@@ -36,17 +36,57 @@ angular
       self.data = res.data
     })
   })
-  .controller('RateGraphController', function($http, rate) {
+  .controller('RateGraphController', function($http, rate, $scope) {
     var self = this
-    rate(4).then(function(res) {
-    	var data = _.sortBy( 
-    		_.map(res.data, function(value, key){
-    	  return {
-    		  time: _.last(key.split('/')),
-    		  series: _.first(key.split('/')) ,
-    		  value: value.average
-    	  }
-    	}),'time')
+    self.groupOptions = [{
+      label: 'Day',
+      value: 2
+    }, {
+      label: '12h',
+      value: 3
+    }, {
+      label: '1h',
+      value: 4
+    }, {
+      label: '1\' ',
+      value: 5
+    }, {
+        label: '1" ',
+        value: 6
+      }]
+
+    self.groupLevel = 3
+
+    $scope.$watch('rate.groupLevel', function(val) {
+      rate(val).then(function(res) {
+        var data = _.sortBy(
+          _.map(res.data, function(value, key) {
+            return {
+              time: _.last(key.split('/')),
+              series: _.first(key.split('/')),
+              value: value.average
+            }
+          }), 'time')
+
+        var byTime = _.groupBy(data, 'time')
+        var series = _.unique(_.pluck(data, 'series'))
+
+        var byTimeAndSeries = _.mapValues(byTime, function(entry) {
+          return _.groupBy(entry, 'series')
+        })
+
+        self.labels = _.keys(byTime)
+        self.series = series
+
+        self.data = _.map(series, function(s, j) {
+          return _.map(self.labels, function(label, i) {
+            if (byTimeAndSeries[label][s]) {
+              return byTimeAndSeries[label][s][0].value
+            }
+            return null
+          })
+        })
+      })
     })
   })
   .factory('countries', makeView('countries'))
