@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Import;
 @Import(MtpViews.class)
 public class MtpConfiguration {
 
-	private static final String DATA_DIR = StringUtils.defaultIfBlank(
+	public static final String DATA_DIR = StringUtils.defaultIfBlank(
 			System.getenv("OPENSHIFT_DATA_DIR"), "/tmp");
 
 	private ConcurrentMap<String, Entry> datastore() {

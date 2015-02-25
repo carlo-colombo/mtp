@@ -1,9 +1,10 @@
 package mtp.services;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Result {
+public class Result implements Serializable {
 	private List<String> key;
 	private Object value;
 
