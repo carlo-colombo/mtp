@@ -17,8 +17,8 @@ views could be reduced adding parameter `group=true` and  `groupLevel=<groupLeve
 ###Dashboard
 - `/index.html`
 
-###Post data
-- `/api/post`
+###Post data 
+- `/api/post` (json format)
 
 ###Run & Test
 - Run: `gradle bootRun`
