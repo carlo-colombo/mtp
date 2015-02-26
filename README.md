@@ -17,6 +17,8 @@ views could be reduced adding parameter `group=true` and  `groupLevel=<groupLeve
 ###Dashboard
 - `/index.html`
 
+###Post data
+- `/api/post`
 
 ###Run & Test
 - Run: `gradle bootRun`
@@ -27,3 +29,6 @@ Create a bean of type `class mtp.services.View` and set `name`,
 map function (`Function<Entry, Result> map`) and optional a reduce function (`Collector<Result, ?, ?> reduce`).
 
 View will be accesible at path `/api/view/<name>`
+
+###Performance
+Simple benchmarking with `ab` (with a concurrency level of 10) reports that endpoint `/api/post` could handle about 30 req/s on one openshift small gear and about 1 req/s when querying with datastore filled with about 20k record. 30 req/s seems the limit of the openshift small gear because benchmarking versus endpoint with no complexity return the same value.
